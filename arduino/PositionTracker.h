@@ -1,7 +1,7 @@
 #ifndef POSITION_TRACKER_H
 #define POSITION_TRACKER_H
 
-// Initialializers
+// Initializers
 void initPositionTracker();
 
 void initCameraPOS(long steps);

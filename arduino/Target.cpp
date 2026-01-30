@@ -51,13 +51,15 @@ void randomMovement() {
 
     for (int x = minServo; x < maxServo; x += 10) {
         if (direction) {
-                for (int y = minStepper; y < maxStepper; y += 50) {
-                    moveInterruptible(y, x);
-                }
+            for (int y = minStepper; y < maxStepper; y += 50) {
+                moveInterruptible(y, x);
+            }
+            direction = !direction;
         } else {
-                for (int y = maxStepper; y > minStepper; y -= 50) {
-                    moveInterruptible(y, x);
-                }
+            for (int y = maxStepper; y > minStepper; y -= 50) {
+                moveInterruptible(y, x);
+            }
+            direction = !direction;
         }
     }
 }
