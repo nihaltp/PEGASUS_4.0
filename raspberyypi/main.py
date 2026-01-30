@@ -98,7 +98,7 @@ while cap.isOpened():
                     print("Target aligned")
 
 
-                print(f"Bird detected | conf={conf:.2f} | center=({cx},{cy})")
+                print(f"Bird detected | center=({cx},{cy}) | x1,y1=({x1},{y1}) | x2,y2=({x2},{y2})")
 
                 cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 255, 0), 2)
                 cv2.circle(frame, (cx, cy), 5, (0, 0, 255), -1)
