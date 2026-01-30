@@ -10,6 +10,8 @@
 static char buffer[BUFFER_SIZE];
 static uint8_t index = 0;
 
+void handleCommand(char* cmd);
+
 void initSerial() {
   Serial.begin(SERIAL_BAUD);
   while (!Serial) {
@@ -33,24 +35,25 @@ void processSerial() {
 }
 
 void handleCommand(char* cmd) {
-  // Examples:
   // MOVE {steps}
-  // Bird detected | center=({cx},{cy}) | x1,y1=({x1},{y1}) | x2,y2=({x2},{y2})
+  if (strncmp(cmd, "MOVE", 4) == 0) {
 
-  if (cmd.startsWith("MOVE")) {
-    int spaceIndex = cmd.indexOf(' ');
-    if (spaceIndex == -1) {
+    char* valuePtr = strchr(cmd, ' ');
+    if (!valuePtr) {
       Serial.println("ERR: MOVE needs value");
       return;
     }
 
-    int steps = cmd.substring(spaceIndex + 1).toInt();
+    int steps = atoi(valuePtr + 1);
 
     Serial.print("MOVE command received");
 
     moveCamera(steps);
+    return;
   }
-  else if (strncmp(cmd, "Bird detected", 13) == 0) {
+
+  // Bird detected | center=({cx},{cy}) | x1,y1=({x1},{y1}) | x2,y2=({x2},{y2})
+  if (strncmp(cmd, "Bird detected", 13) == 0) {
 
     int cx, cy;
     int x1, y1;
@@ -68,12 +71,12 @@ void handleCommand(char* cmd) {
       Serial.println("ERR: Failed to parse Bird detected data");
       return;
     }
-    else {
-      Serial.println("Bird data parsed successfully");
-    }
+
+    // You will handle motion logic here
+    return;
   }
-  else {
-    Serial.print("ERR: Unknown command -> ");
-    Serial.println(cmd);
-  }
+
+  // ---- Unknown command ----
+  Serial.print("ERR: Unknown command -> ");
+  Serial.println(cmd);
 }
