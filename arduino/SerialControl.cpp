@@ -47,6 +47,8 @@ void handleCommand(char* cmd) {
     int steps = cmd.substring(spaceIndex + 1).toInt();
 
     Serial.print("MOVE command received");
+
+    moveCamera(steps);
   }
   else if (strncmp(cmd, "Bird detected", 13) == 0) {
 

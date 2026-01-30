@@ -12,6 +12,14 @@ void initSteppers() {
   pinMode(Y_DIR_PIN, OUTPUT);
 }
 
+void moveCamera(int steps) {
+  if (steps > 0) {
+    moveX(steps, HIGH);  // Move X forward
+  } else if (steps < 0) {
+    moveX(-steps, LOW);  // Move X backward
+  }
+}
+
 void moveStepper(int stepPin, int dirPin, int steps, bool dir) {
   digitalWrite(dirPin, dir);
 
