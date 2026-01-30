@@ -8,7 +8,7 @@ void moveInterruptible(int targetX, int targetAngle);
  * Traces a rectangle with the laser.
  * Stepper (X-axis) rotates the base.
  * Servo (Y-axis) moves the laser up and down.
- * * @param cx Current X (not used in this specific trace logic)
+ * @param cx Current X (not used in this specific trace logic)
  * @param cy Current Y (not used in this specific trace logic)
  * @param x1 Top-left X coordinate (stepper steps)
  * @param y1 Top-left Y coordinate (servo angle)
@@ -54,13 +54,12 @@ void randomMovement() {
             for (int y = minStepper; y < maxStepper; y += 50) {
                 moveInterruptible(y, x);
             }
-            direction = !direction;
         } else {
             for (int y = maxStepper; y > minStepper; y -= 50) {
                 moveInterruptible(y, x);
             }
-            direction = !direction;
         }
+        direction = !direction;
     }
 }
 
