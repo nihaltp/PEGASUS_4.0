@@ -7,14 +7,9 @@
 void initSteppers() {
   pinMode(X_STEP_PIN, OUTPUT);
   pinMode(X_DIR_PIN, OUTPUT);
-  pinMode(X_EN_PIN, OUTPUT);
 
   pinMode(Y_STEP_PIN, OUTPUT);
   pinMode(Y_DIR_PIN, OUTPUT);
-  pinMode(Y_EN_PIN, OUTPUT);
-
-  digitalWrite(X_EN_PIN, LOW); // enable drivers
-  digitalWrite(Y_EN_PIN, LOW);
 }
 
 void moveStepper(int stepPin, int dirPin, int steps, bool dir) {
