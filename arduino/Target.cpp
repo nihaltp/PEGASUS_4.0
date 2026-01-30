@@ -2,6 +2,8 @@
 #include "MotionPlanner.h"
 #include "ServoControl.h"
 
+void moveInterruptible(int targetX, int targetAngle);
+
 /**
  * Traces a rectangle with the laser.
  * Stepper (X-axis) rotates the base.
@@ -36,4 +38,40 @@ void targetBird(int cx, int cy, int x1, int y1, int x2, int y2) {
     // 5. Trace back to (x1, y1) - Move servo back to start
     setServoAngle(y1);
     delay(100);
+}
+
+void randomMovement() {
+    int minStepper = -500;
+    int maxStepper = 500;
+
+    int minServo = 45;
+    int maxServo = 135;
+
+    bool direction = true;
+
+    for (int x = minServo; x < maxServo; x += 10) {
+        if (direction) {
+                for (int y = minStepper; y < maxStepper; y += 50) {
+                    moveInterruptible(y, x);
+                }
+        } else {
+                for (int y = maxStepper; y > minStepper; y -= 50) {
+                    moveInterruptible(y, x);
+                }
+        }
+    }
+}
+
+void moveInterruptible(int targetX, int targetAngle) {
+    // Basic logic: move toward target, but abort if serial data arrives
+    if (Serial.available() > 0) return; 
+
+    moveTo(targetX, 0); // Horizontal
+    setServoAngle(targetAngle); // Vertical
+    
+    // Replace a single long delay(1000) with a serial-aware wait
+    for(int i = 0; i < 10; i++) {
+        if (Serial.available() > 0) break;
+        delay(50);
+    }
 }

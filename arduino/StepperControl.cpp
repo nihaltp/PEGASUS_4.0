@@ -1,6 +1,7 @@
 #include <Arduino.h>
 #include "StepperControl.h"
 #include "Pins.h"
+#include "PositionTracker.h"
 
 #define STEP_DELAY_US 800   // controls speed
 
@@ -33,8 +34,10 @@ void moveStepper(int stepPin, int dirPin, int steps, bool dir) {
 
 void moveCameraStepper(int steps, bool dir) {
   moveStepper(CAMERA_STEP_PIN, CAMERA_DIR_PIN, steps, dir);
+  updateCameraPOS(dir ? steps : -steps);
 }
 
 void moveLaserStepper(int steps, bool dir) {
   moveStepper(LASER_STEP_PIN, LASER_DIR_PIN, steps, dir);
+  updateLaserPOS(dir ? steps : -steps);
 }
