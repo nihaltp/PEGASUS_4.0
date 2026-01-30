@@ -72,7 +72,7 @@ void handleCommand(char* cmd) {
       return;
     }
 
-    // You will handle motion logic here
+    targetBird(cx, cy, x1, y1, x2, y2);
     return;
   }
 
