@@ -1,3 +1,7 @@
+#include "Arduino.h"
+#include "MotionPlanner.h"
+#include "ServoControl.h"
+
 /**
  * Traces a rectangle with the laser.
  * Stepper (X-axis) rotates the base.

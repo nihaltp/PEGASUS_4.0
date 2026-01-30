@@ -3,7 +3,7 @@
 
 void initSteppers();
 void moveCamera(int steps);
-void moveX(int steps, bool dir);
-void moveY(int steps, bool dir);
+void moveCameraStepper(int steps, bool dir);
+void moveLaserStepper(int steps, bool dir);
 
 #endif

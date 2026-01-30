@@ -3,6 +3,7 @@
 #include "StepperControl.h"
 #include "ServoControl.h"
 #include "MotionPlanner.h"
+#include "Target.h"
 
 #define SERIAL_BAUD 115200
 #define BUFFER_SIZE 64
