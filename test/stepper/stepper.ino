@@ -10,6 +10,7 @@
 #define LASER_PIN 8
 
 Servo servoMotor;
+int servoAngle = 90;
 bool laserState = false;
 
 void setup() {
@@ -82,6 +83,12 @@ void processSingleCommand(String command) {
     Serial.print("OK: servo ");
     Serial.println(angle);
 
+  } else if (command.startsWith("servolaser ")) {
+    int angle = command.substring(10).toInt();
+    Serial.print("OK: servolaser ");
+    Serial.println(angle);
+    moveServoLaser(angle);
+
   } else if (command.startsWith("wait ")) {
     int duration = command.substring(5).toInt();
     delay(duration);
@@ -96,6 +103,22 @@ void processSingleCommand(String command) {
 
 void moveServo(int angle) {
   servoMotor.write(angle);
+  servoAngle = angle;
+}
+
+void moveServoLaser(int angle) {
+  for (int i = servoAngle; i != angle; ) {
+    if (i < angle) {
+      i++;
+    } else {
+      i--;
+    }
+    servoMotor.write(i);
+    digitalWrite(LASER_PIN, laserState ? HIGH : LOW);
+    laserState = !laserState;
+    delay(15);
+  }
+  servoAngle = angle;
 }
 
 void moveCamera(int steps) {
