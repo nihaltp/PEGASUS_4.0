@@ -11,7 +11,10 @@
 
 Servo servoMotor;
 int servoAngle = 90;
+
 bool laserState = false;
+unsigned long lastBlink = 0;
+const unsigned long interval = 500; // ms
 
 void setup() {
   pinMode(CAMERA_STEP_PIN, OUTPUT);
@@ -114,11 +117,16 @@ void moveServoLaser(int angle) {
       i--;
     }
     servoMotor.write(i);
-    digitalWrite(LASER_PIN, laserState ? HIGH : LOW);
-    laserState = !laserState;
+    if (millis() - lastBlink >= interval) {
+      lastBlink = millis();
+      digitalWrite(LASER_PIN, laserState ? HIGH : LOW);
+      laserState = !laserState;
+    }
     delay(15);
   }
   servoAngle = angle;
+  laserState = false;
+  digitalWrite(LASER_PIN, LOW);
 }
 
 void moveCamera(int steps) {
