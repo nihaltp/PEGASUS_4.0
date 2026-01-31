@@ -7,14 +7,17 @@
 #define SERVO_PIN 9
 #define LASER_STEP_PIN 5
 #define LASER_DIR_PIN 6
+#define LASER_PIN 8
 
 Servo servoMotor;
+bool laserState = false;
 
 void setup() {
   pinMode(CAMERA_STEP_PIN, OUTPUT);
   pinMode(CAMERA_DIR_PIN, OUTPUT);
   pinMode(LASER_STEP_PIN, OUTPUT);
   pinMode(LASER_DIR_PIN, OUTPUT);
+  pinMode(LASER_PIN, OUTPUT);
   servoMotor.attach(SERVO_PIN);
 
   Serial.begin(9600);
@@ -41,6 +44,12 @@ void processCommand(String command) {
     moveLaser(steps);
     Serial.print("OK: laser ");
     Serial.println(steps);
+
+  } else if (command == "laser") {
+    laserState = !laserState;
+    digitalWrite(LASER_PIN, laserState ? HIGH : LOW);
+    Serial.print("OK: laser ");
+    Serial.println(laserState ? "ON" : "OFF");
 
   } else if (command.startsWith("servo ")) {
     int angle = command.substring(6).toInt();
